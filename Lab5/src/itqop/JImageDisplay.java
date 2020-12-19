@@ -17,7 +17,7 @@ public class JImageDisplay extends JComponent{
     int heigth;
     private BufferedImage image;
     JImageDisplay(){
-        this(200,200);
+        this(600,600);
     }
     JImageDisplay(int w,int h){
         width = w;

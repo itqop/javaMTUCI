@@ -105,37 +105,31 @@ public class FractalExplorer {
             if (e.getActionCommand() == "Save2img") {
                 //TODO: save fractal to img
 
-                // Allow the user to choose a file to save the image to.
                 JFileChooser myFileChooser = new JFileChooser();
 
-                // Save only PNG images.
+
                 FileFilter extensionFilter =
                         new FileNameExtensionFilter("PNG Images", "png");
                 myFileChooser.setFileFilter(extensionFilter);
 
-                // Ensures that the filechooser won't allow non-".png"
-                // filenames.
                 myFileChooser.setAcceptAllFileFilterUsed(false);
 
-                // Pops up a "Save file" window which lets the user select a
-                // directory and file to save to.
+
                 int userSelection = myFileChooser.showSaveDialog(ImageDisp);
 
-                // If the outcome of the file-selection operation is
-                // APPROVE_OPTION, continue with the file-save operation.
+
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
 
-                    // Get the file and file name.
+
                     java.io.File file = myFileChooser.getSelectedFile();
                     String file_name = file.toString();
 
-                    // Try saving the fractal image to disk.
+
                     try {
                         BufferedImage displayImage = ImageDisp.getImage();
                         javax.imageio.ImageIO.write(displayImage, "png", file);
                     }
-                    // Catches all exceptions and prints a message with the
-                    // exception.
+
                     catch (Exception exception) {
                         JOptionPane.showMessageDialog(ImageDisp,
                                 exception.getMessage(), "Cannot Save Image",
