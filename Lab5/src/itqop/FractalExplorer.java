@@ -28,15 +28,38 @@ public class FractalExplorer {
     }
 
     protected void createAndShowGUI(){
+        String[] fractals = {
+                "Mandelbrot",
+                "Tricorn",
+                "Burning Ship"
+        };
         JFrame frame = new JFrame("Fractal GEN");
         ImageDisp = new JImageDisplay(Width, Height);
-        JButton myBtn = new JButton("Reset");
+        JPanel panelDown = new JPanel();
+        JPanel panelUp = new JPanel();
+        JButton BtnReset = new JButton("Reset");
+        JButton BtnSave = new JButton("Save2img");
+        JLabel topLabel = new JLabel("Fractals: ");
+        JComboBox comboBox = new JComboBox(fractals);
 
-        myBtn.setActionCommand("Reset");
-        myBtn.addActionListener(new Actions());
+        BtnReset.setActionCommand("Reset");
+        BtnReset.addActionListener(new Actions());
 
+        BtnSave.setActionCommand("Save2img");
+        BtnSave.addActionListener(new Actions());
+
+        comboBox.setActionCommand("vibor");
+        comboBox.addActionListener(new Actions());
+
+        panelDown.add(BtnSave);
+        panelDown.add(BtnReset);
+
+        panelUp.add(topLabel);
+        panelUp.add(comboBox);
+
+        frame.getContentPane().add(panelUp, BorderLayout.NORTH);
         frame.getContentPane().add(ImageDisp, BorderLayout.CENTER);
-        frame.getContentPane().add(myBtn, BorderLayout.SOUTH);
+        frame.getContentPane().add(panelDown, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.getContentPane().addMouseListener(new MyMouseListener());
@@ -67,6 +90,7 @@ public class FractalExplorer {
 
     }
 
+
     public class Actions implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand() == "Reset") {
@@ -74,6 +98,18 @@ public class FractalExplorer {
                 drawFractal();
 
             }
+            if (e.getActionCommand() == "Save2img") {
+                //TODO: save fractal to img
+            }
+            if (e.getActionCommand() == "vibor") {
+                //TODO: others fr
+                JComboBox box = (JComboBox)e.getSource();
+                String item = (String)box.getSelectedItem();
+                generateFractal.getInitialRange(range2D);
+                drawFractal();
+
+            }
+
         }
     }
 
