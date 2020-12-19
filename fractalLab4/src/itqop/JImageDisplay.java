@@ -42,7 +42,7 @@ public class JImageDisplay extends JComponent{
     public void drawPixel (int x, int y, int rgbColor){
             this.image.setRGB(x,y,rgbColor);
     }
-    public static void run(int ww,int hh){
+    /*public static void run(int ww,int hh){
         int w= ww;
         int h = hh;
         JFrame frame = new JFrame();
@@ -52,5 +52,5 @@ public class JImageDisplay extends JComponent{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(w, h);
         frame.setVisible(true);
-    }
+    }*/
 }

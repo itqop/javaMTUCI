@@ -1,8 +1,10 @@
 package itqop;
 
-public class Main extends JImageDisplay{
+public class Main{
 
     public static void main(String[] args) {
-        JImageDisplay.run(600,600);
+        FractalExplorer Win = new FractalExplorer(600,600);
+        Win.createAndShowGUI();
+        Win.drawFractal();
     }
 }
