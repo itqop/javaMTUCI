@@ -15,7 +15,7 @@ public class Mandelbrot extends FractalGenerator{
         double Z = 0;
         Complex one = new Complex(0,0);
         Complex next = new Complex(0,0);
-        while (count++ < MAX_ITERATIONS && Z*Z < 4) {
+        while (count++ < MAX_ITERATIONS && Z < 4) {
             next.real(one.real()*one.real() - one.imag()* one.imag() + x);
             next.imag(2 * one.real() * one.imag() + y);
             one.real(next.real());

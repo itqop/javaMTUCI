@@ -27,6 +27,9 @@ public class JImageDisplay extends JComponent{
         super.setPreferredSize(dim);
 
     }
+    public BufferedImage getImage() {
+        return image;
+    }
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

@@ -1,12 +1,15 @@
 package itqop;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class FractalExplorer {
 
@@ -22,6 +25,7 @@ public class FractalExplorer {
         Width = w;
         Height = h;
         generateFractal = new Mandelbrot();
+
         range2D = new Rectangle2D.Double();
         generateFractal.getInitialRange(range2D);
 
@@ -100,11 +104,60 @@ public class FractalExplorer {
             }
             if (e.getActionCommand() == "Save2img") {
                 //TODO: save fractal to img
+
+                // Allow the user to choose a file to save the image to.
+                JFileChooser myFileChooser = new JFileChooser();
+
+                // Save only PNG images.
+                FileFilter extensionFilter =
+                        new FileNameExtensionFilter("PNG Images", "png");
+                myFileChooser.setFileFilter(extensionFilter);
+
+                // Ensures that the filechooser won't allow non-".png"
+                // filenames.
+                myFileChooser.setAcceptAllFileFilterUsed(false);
+
+                // Pops up a "Save file" window which lets the user select a
+                // directory and file to save to.
+                int userSelection = myFileChooser.showSaveDialog(ImageDisp);
+
+                // If the outcome of the file-selection operation is
+                // APPROVE_OPTION, continue with the file-save operation.
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+
+                    // Get the file and file name.
+                    java.io.File file = myFileChooser.getSelectedFile();
+                    String file_name = file.toString();
+
+                    // Try saving the fractal image to disk.
+                    try {
+                        BufferedImage displayImage = ImageDisp.getImage();
+                        javax.imageio.ImageIO.write(displayImage, "png", file);
+                    }
+                    // Catches all exceptions and prints a message with the
+                    // exception.
+                    catch (Exception exception) {
+                        JOptionPane.showMessageDialog(ImageDisp,
+                                exception.getMessage(), "Cannot Save Image",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
             if (e.getActionCommand() == "vibor") {
                 //TODO: others fr
                 JComboBox box = (JComboBox)e.getSource();
                 String item = (String)box.getSelectedItem();
+                switch (item){
+                    case "Mandelbrot":
+                        generateFractal = new Mandelbrot();
+                        break;
+                    case "Tricorn":
+                        generateFractal = new Tricorn();
+                        break;
+                    case "Burning Ship":
+                        generateFractal = new BShip();
+                        break;
+                }
                 generateFractal.getInitialRange(range2D);
                 drawFractal();
 
