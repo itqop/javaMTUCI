@@ -25,5 +25,3 @@ public class Palindrome {
     }
 
 }
-//"C:\Program Files\Java\jdk-14.0.2\bin\java.exe" -Dfile.encoding=UTF-8 -classpath "Q:\Java Projects\lab1\out\production\lab1" itqop.Palindrome 123321 232r23 23
-
