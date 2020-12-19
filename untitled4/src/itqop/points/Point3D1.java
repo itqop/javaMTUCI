@@ -43,8 +43,7 @@ public class Point3D1 {
         Point3D pointOne = new Point3D(1,1,2);
         Point3D pointTwo = new Point3D(4,1,-2);
         Point3D default1 = new Point3D();
-       // pointOne.xCoord = 2.1;
-       // pointTwo.yCoord = 9;
+
         System.out.println(equals(pointOne, pointTwo));
         System.out.println(pointOne.distanceTo(pointTwo));
         System.out.println(computeArea(pointOne,pointTwo,default1));
