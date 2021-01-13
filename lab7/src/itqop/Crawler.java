@@ -3,15 +3,22 @@ import java.io.*;
 import java.net.*;
 import java.util.LinkedList;
 
-
 public class Crawler {
 
-    static LinkedList <URLDepthPair> findLink = new LinkedList <URLDepthPair>();
-    static LinkedList <URLDepthPair> viewedLink = new LinkedList <URLDepthPair>();
+    static LinkedList <URLDepthPair> findLink = new LinkedList <URLDepthPair>();//найденные
+    static LinkedList <URLDepthPair> viewedLink = new LinkedList <URLDepthPair>();//просмотренные
 
     public static void showResult(LinkedList<URLDepthPair> viewedLink)
-    {
-        for (URLDepthPair c : viewedLink) System.out.println(c.getURL() + " "+c.getDepth());
+    {//выводит список всех пар, которые были посещены
+        for (URLDepthPair c : viewedLink) System.out.println("Depth : "+c.getDepth() + "\tLink : "+c.getURL());
+    }
+    public static  void request(PrintWriter out,URLDepthPair pair) throws MalformedURLException //http запрос
+    {//исключение - часть java api (если адрес не так начинается)
+        out.println("GET " + pair.getPath() + " HTTP/1.1");
+        out.println("Host: " + pair.getHost());
+        out.println("Connection: close");
+        out.println();
+        out.flush();
     }
     public static void Process(String pair, int maxDepth) throws IOException
     {
@@ -19,19 +26,18 @@ public class Crawler {
         while (!findLink.isEmpty())
         {
             URLDepthPair currentPair = findLink.removeFirst();
-            if(currentPair.URL.equals(URLDepthPair.URL_PREFIX)){continue;}
+            if(currentPair.URL.equals("http://")){continue;}
             if (currentPair.depth < maxDepth)
             {
-                Socket my_socket = new Socket(currentPair.getHost(), 80);
-                my_socket.setSoTimeout(5000);
+                Socket my_socket = new Socket(currentPair.getHost(), 80);//создает сокет и уст. соединение с портом
+                my_socket.setSoTimeout(5000);//уст. время ожидания в миллисекундах
                 try
                 {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(my_socket.getInputStream()));
-                    PrintWriter out = new PrintWriter(my_socket.getOutputStream(), true);
-                    out.println("GET " + currentPair.getPath() + " HTTP/1.1");
-                    out.println("Host: " + currentPair.getHost());
-                    out.println("Connection: close");
-                    out.println();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(my_socket.getInputStream()));//возращает сроку связ с сокет (данные с другой стороны соединения)
+                    //Теперь in имеет тип InputStreamReader, который может читать символы из
+                    //сокета (Socket)
+                    PrintWriter out = new PrintWriter(my_socket.getOutputStream(), true);//отправлять данные на другую стороную соединения
+                    request(out, currentPair);
                     String line;
                     while ((line = in.readLine()) != null)
                     {
@@ -57,7 +63,7 @@ public class Crawler {
                                 findLink.add(newPair);
                         }
                     }
-                    my_socket.close();
+                    my_socket.close();//закрывает сокет
                 }
                 catch (SocketTimeoutException e)
                 {
@@ -68,5 +74,16 @@ public class Crawler {
         }
         showResult(viewedLink);
     }
-
+    public static void main(String[] args)
+    {
+        String[] arg = new String[]{"http://mtuci.ru/","2"};
+        try
+        {
+            Process(arg[0], Integer.parseInt(arg[1]));
+        }
+        catch (NumberFormatException | IOException e)
+        {
+            System.out.println("usage: java crawler " + arg[0] + " " + arg[1]);
+        }
+    }
 }
