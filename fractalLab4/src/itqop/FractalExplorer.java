@@ -30,13 +30,13 @@ public class FractalExplorer {
     protected void createAndShowGUI(){
         JFrame frame = new JFrame("Fractal GEN");
         ImageDisp = new JImageDisplay(Width, Height);
-        JButton myBtn = new JButton("Reset");
+        JButton BtnReset = new JButton("Reset");
 
-        myBtn.setActionCommand("Reset");
-        myBtn.addActionListener(new Actions());
+        BtnReset.setActionCommand("Reset");
+        BtnReset.addActionListener(new Actions());
 
         frame.getContentPane().add(ImageDisp, BorderLayout.CENTER);
-        frame.getContentPane().add(myBtn, BorderLayout.SOUTH);
+        frame.getContentPane().add(BtnReset, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.getContentPane().addMouseListener(new MyMouseListener());

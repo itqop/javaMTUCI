@@ -4,25 +4,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class URLDepthPair {
-    public static final String URL_PREFIX = "http://";//строковая константа
+    public static final String URL_PREFIX = "http://";
 
-    public String URL;//поле типа стринг. ключ дальше будет
-    public int depth;//значение дальше будет
+    public String URL;
+    public int depth;
 
-    public URLDepthPair (String URL, int depth)//конструктор
+    public URLDepthPair (String URL, int depth)
     {
         this.URL=URL;
         this.depth=depth;
     }
 
-    public String getHost() throws MalformedURLException //исключение может быть
-    {//исключение - часть java api (если адрес не так начинается)
-        URL host = new URL(URL); //доменное имя
+    public String getHost() throws MalformedURLException
+    {
+        URL host = new URL(URL);
         return host.getHost();
     }
     public String getPath() throws MalformedURLException
     {
-        URL path = new URL(URL);// путь
+        URL path = new URL(URL);
         return path.getPath();
     }
     public int getDepth()
